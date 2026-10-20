@@ -1,0 +1,157 @@
+{
+  "common": {
+    "appName": "Agri AI",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "signingOut": "Signing out…",
+    "getStarted": "Get started",
+    "loading": "Loading…",
+    "or": "or",
+    "optional": "optional",
+    "language": "Language"
+  },
+  "roles": {
+    "farmer": "Farmer",
+    "agronomist": "Agronomist",
+    "cooperative_admin": "Cooperative Admin",
+    "system_admin": "System Admin"
+  },
+  "nav": {
+    "signIn": "Sign in",
+    "getStarted": "Get started"
+  },
+  "landing": {
+    "badge": "AI-powered crop protection",
+    "heroTitle1": "Detect crop diseases",
+    "heroTitle2": "before they spread",
+    "heroSubtitle": "Agri AI analyzes crop photos in real time and connects farmers with expert agronomists — turning a smartphone camera into an early-warning system for plant disease.",
+    "startDetecting": "Start detecting",
+    "photoCaption1": "A farmer photographs a diseased crop in her field",
+    "photoCaption2": "Field diagnosis — the camera becomes a clinic",
+    "stats": {
+      "diseases": "Disease classes",
+      "accuracy": "Model accuracy",
+      "roles": "User roles",
+      "availability": "Availability"
+    },
+    "howTitle": "From photo to treatment in three steps",
+    "howSubtitle": "Designed for farmers in the field — fast, simple, and backed by human expertise.",
+    "steps": {
+      "capture": { "title": "Capture", "description": "Take a clear photo of the affected crop with any phone camera." },
+      "detect": { "title": "Detect", "description": "Our model identifies the disease with confidence scoring in real time." },
+      "act": { "title": "Act", "description": "An agronomist validates the diagnosis and advises on treatment." }
+    },
+    "featuresTitle": "Built for the whole agricultural chain",
+    "featuresSubtitle": "From individual farmers to cooperative administrators — one platform, every role.",
+    "features": {
+      "instantAnalysis": { "title": "Instant Analysis", "description": "Upload a crop photo and receive an AI-powered disease diagnosis in seconds — no lab required." },
+      "expertValidation": { "title": "Expert Validation", "description": "Regional agronomists review every prediction and send treatment recommendations directly to farmers." },
+      "continuousLearning": { "title": "Continuous Learning", "description": "Every expert validation feeds back into the model, improving accuracy for the whole community." },
+      "secure": { "title": "Secure by Design", "description": "Role-based access for farmers, agronomists, cooperative admins, and system administrators." },
+      "regionalCoverage": { "title": "Regional Coverage", "description": "Cooperatives assign agronomists to districts, sectors, and cells so no farmer is left behind." },
+      "diseaseClasses": { "title": "38 Disease Classes", "description": "The model covers the most common crop diseases across tomatoes, potatoes, maize, and more." }
+    },
+    "contextTitle": "From Rwanda's fields to real-time diagnosis",
+    "contextText1": "Crop diseases can wipe out a season's work before a farmer ever reaches an expert. Agri AI closes that gap — a photo taken in the field becomes a diagnosis in seconds, reviewed by a real agronomist who knows your district.",
+    "contextText2": "Every prediction carries the climate context of your exact location: rainfall, temperature, and humidity trends — so advice fits your field, not a generic textbook.",
+    "ctaTitle": "Ready to protect your harvest?",
+    "ctaSubtitle": "Register with a code from your cooperative and start detecting diseases today.",
+    "ctaButton": "Create your account",
+    "madeIn": "Built for Rwanda's farmers",
+    "footer": { "copyright": "Agri AI Platform. All rights reserved." }
+  },
+  "footer": {
+    "description": "An agricultural intelligence platform that turns a phone camera into an early-warning system for crop disease — AI diagnosis, expert agronomist review, and climate context for every field.",
+    "platform": "Platform",
+    "credits": "Built by",
+    "poweredBy": "Powered by",
+    "madeIn": "Kigali, Rwanda",
+    "secure": "Role-based access — farmers, agronomists, cooperatives, admins",
+    "mission": "Protecting harvests, one photo at a time",
+    "nsrNote": "Location and administrative data aligned with NISR (National Institute of Statistics of Rwanda) geographic codes."
+  },
+  "auth": {
+    "signInTitle": "Sign in to your account",
+    "registerTitle": "Create your account",
+    "secureTagline": "Secure agricultural intelligence platform",
+    "registeredBanner": "Registration successful. Please sign in with your new account.",
+    "email": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPassword": "Confirm password",
+    "passwordHint": "Minimum 8 characters with uppercase, lowercase, digit, and special character",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "e.g., Jean Niyigena",
+    "phoneNumber": "Phone number",
+    "phonePlaceholder": "e.g., +250 788 123 456",
+    "registrationCode": "Registration code",
+    "registrationCodePlaceholder": "e.g., X7K2M9P1",
+    "registrationCodeHint": "Provided by your cooperative admin",
+    "yourLocation": "Your location",
+    "province": "Province",
+    "district": "District",
+    "sector": "Sector",
+    "cell": "Cell",
+    "village": "Village",
+    "select": "Select",
+    "loadingLocations": "Loading…",
+    "noProvinces": "No provinces available",
+    "signingIn": "Signing in…",
+    "signIn": "Sign in",
+    "createAccount": "Create account",
+    "creatingAccount": "Creating account…",
+    "noAccount": "Don't have an account?",
+    "registerWithCode": "Register with a code",
+    "haveAccount": "Already have an account?",
+    "errors": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address",
+      "passwordRequired": "Password is required",
+      "passwordShort": "Password must be at least 6 characters",
+      "passwordShort8": "Password must be at least 8 characters",
+      "confirmRequired": "Please confirm your password",
+      "passwordMismatch": "Passwords do not match",
+      "codeRequired": "Registration code is required",
+      "fullNameRequired": "Full name is required",
+      "phoneRequired": "Phone number is required",
+      "phoneInvalid": "Invalid phone number format",
+      "provinceRequired": "Province is required",
+      "districtRequired": "District is required",
+      "sectorRequired": "Sector is required",
+      "cellRequired": "Cell is required",
+      "villageRequired": "Village is required",
+      "emailTaken": "This email is already registered. Try signing in instead.",
+      "weakPassword": "Password too weak. Use uppercase, lowercase, a digit, and a special character.",
+      "invalidInput": "Invalid input. Please check your information.",
+      "networkError": "Network error. Is the server running?",
+      "registerFailed": "Registration failed. Please try again."
+    }
+  },
+  "dashboard": {
+    "farmerTitle": "Farmer Dashboard",
+    "farmerSubtitle": "Crop health monitoring",
+    "agronomistTitle": "Agronomist Dashboard",
+    "adminTitle": "Admin Dashboard",
+    "cooperativeTitle": "Cooperative Dashboard",
+    "tabs": {
+      "detection": "Disease Detection",
+      "agronomist": "My Agronomist",
+      "messages": "Messages"
+    }
+  },
+  "farmer": {
+    "detectionTitle": "Crop Disease Detection",
+    "detectionSubtitle": "Upload a photo of your crop to detect diseases and get instant analysis",
+    "cropType": "Crop Type",
+    "cropTypePlaceholder": "e.g., Tomato, Potato, Corn",
+    "tipsTitle": "Tips for best results",
+    "tips": {
+      "clear": "Use clear, well-lit photos",
+      "focus": "Focus on affected areas of the crop",
+      "blurry": "Avoid blurry images",
+      "formats": "Supported formats: JPG, PNG",
+      "saved": "Predictions are automatically saved for agronomist review"
+    }
+  }
+}

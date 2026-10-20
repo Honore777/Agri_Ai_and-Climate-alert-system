@@ -1,0 +1,18 @@
+# secrets
+.env
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# local database
+*.db
+
+# logs
+*.log
+
+# uploaded files
+storage/

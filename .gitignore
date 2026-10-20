@@ -1,0 +1,28 @@
+# secrets
+.env
+.env*.local
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# node
+node_modules/
+.next/
+out/
+
+# local database & uploads
+*.db
+backend/storage/
+
+# ML model weights (too large for git — distribute separately)
+models/*.pth
+
+# logs
+*.log
+
+# misc
+.DS_Store
+*.tsbuildinfo
