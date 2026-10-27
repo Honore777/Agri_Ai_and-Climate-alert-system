@@ -5,7 +5,8 @@ import { useTranslation, type Locale } from '@/i18n/LocaleContext';
 
 const LOCALES: { id: Locale; label: string }[] = [
   { id: 'en', label: 'EN' },
-  { id: 'rw', label: 'RW' },
+  { id: 'rw', label: 'KIN' },
+  { id: 'fr', label: 'FR' },
 ];
 
 export default function LanguageSwitcher() {

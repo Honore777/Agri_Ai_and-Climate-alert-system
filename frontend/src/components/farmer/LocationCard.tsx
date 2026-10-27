@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { CheckCircle2, MapPin, Navigation, RefreshCw } from 'lucide-react';
 import apiClient from '@/services/api/axios';
 import { getErrorMessage } from '@/utils/errors';
+import { useTranslation } from '@/i18n/LocaleContext';
 
 interface UserLocation {
   location_path?: string | null;
@@ -19,6 +20,7 @@ interface UserLocation {
  * weather snapshots and the agronomist can see exactly where the farm is.
  */
 export default function LocationCard() {
+  const { t } = useTranslation();
   const [location, setLocation] = useState<UserLocation | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLocating, setIsLocating] = useState(false);
@@ -131,8 +133,7 @@ export default function LocationCard() {
       </div>
       {saved && (
         <p className="mt-3 rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-800">
-          Location saved — your next predictions will include precise weather and your
-          agronomist can see exactly where you are.
+          {t('notices.locationSaved')}
         </p>
       )}
       {error && (

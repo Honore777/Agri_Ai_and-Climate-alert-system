@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useRef } from 'react';
+import { FolderOpen } from 'lucide-react';
+import { useTranslation } from '@/i18n/LocaleContext';
 
 interface ImageUploadProps {
   onFileSelect: (file: File) => void;
@@ -9,13 +11,14 @@ interface ImageUploadProps {
 
 export const ImageUpload: React.FC<ImageUploadProps> = ({ onFileSelect, disabled = false }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      alert('Please select an image file (JPG, PNG, etc.)');
+      alert(t('predict.imageOnly'));
       return;
     }
 
@@ -42,11 +45,12 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onFileSelect, disabled
         style={{ display: 'none' }}
         disabled={disabled}
       />
-      <p className="text-blue-600 font-medium">
-        {disabled ? 'Processing...' : '📁 Click to select image'}
+      <p className="flex items-center justify-center gap-2 text-blue-600 font-medium">
+        <FolderOpen className="h-4 w-4" />
+        {disabled ? t('predict.processing') : t('predict.selectImage')}
       </p>
-      <p className="text-sm text-gray-500 mt-2">or drag and drop</p>
-      <p className="text-xs text-gray-400 mt-1">JPG, PNG supported</p>
+      <p className="text-sm text-gray-500 mt-2">{t('predict.dragDrop')}</p>
+      <p className="text-xs text-gray-400 mt-1">{t('predict.formats')}</p>
     </div>
   );
 };

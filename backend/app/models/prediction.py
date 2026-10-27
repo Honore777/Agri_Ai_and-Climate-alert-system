@@ -25,7 +25,9 @@ class Prediction(Base):
     
     # WHAT: Which image was analyzed
     image_id = Column(Integer, ForeignKey('images.id'), nullable=False, index=True)
-    image = relationship('Image', back_populates='predictions')
+    image = relationship(
+        'Image', back_populates='predictions', foreign_keys='Prediction.image_id'
+    )
     
     # PREDICTION RESULT: What the model predicted
     crop_type=Column(String, nullable=True)

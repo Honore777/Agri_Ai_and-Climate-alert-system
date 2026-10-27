@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CheckCircle2, ClipboardList, History, MapPin } from 'lucide-react';
+import { CheckCircle2, ClipboardList, History, ImagePlus, MapPin } from 'lucide-react';
 import { useAgronomistReview } from '@/hooks/useAgronomistReview';
 import DashboardHeader from '@/components/layout/DashboardHeader';
 import { useTranslation } from '@/i18n/LocaleContext';
@@ -9,6 +9,9 @@ import PredictionCard from '@/components/agronomist/PredictionCard';
 import PredictionReviewForm from '@/components/agronomist/PredictionReviewForm';
 import PredictionImage from '@/components/prediction/PredictionImage';
 import WeatherPanel from '@/components/prediction/WeatherPanel';
+import { sendMessageToFarmer } from '@/services/message.service';
+import { getErrorMessage } from '@/utils/errors';
+import { diseaseLabel } from '@/utils/disease';
 
 /**
  * AGRONOMIST DASHBOARD
@@ -33,6 +36,25 @@ const AgronomistDashboard: React.FC = () => {
     clearError,
   } = useAgronomistReview();
   const [activeTab, setActiveTab] = useState<'pending' | 'reviewed'>('pending');
+  const [requestingPhotos, setRequestingPhotos] = useState<number | null>(null);
+  const [actionNotice, setActionNotice] = useState<string | null>(null);
+
+  const requestMorePhotos = async (predictionId: number) => {
+    setRequestingPhotos(predictionId);
+    setActionNotice(null);
+    try {
+      await sendMessageToFarmer(predictionId, {
+        title: t('notices.requestPhotosTitle'),
+        body: t('notices.requestPhotosBody'),
+        prediction_id: predictionId,
+      });
+      setActionNotice(t('notices.photoRequestSent'));
+    } catch (err) {
+      setActionNotice(getErrorMessage(err, t('notices.photoRequestFailed')));
+    } finally {
+      setRequestingPhotos(null);
+    }
+  };
 
   const selectedPrediction = pendingPredictions.find(
     p => p.id === selectPredictionId
@@ -70,6 +92,16 @@ const AgronomistDashboard: React.FC = () => {
             </button>
           ))}
         </div>
+
+        {/* ACTION NOTICE */}
+        {actionNotice && (
+          <div className="mb-6 flex items-center justify-between rounded-lg border border-indigo-200 bg-indigo-50 p-4">
+            <p className="text-sm font-semibold text-indigo-900">{actionNotice}</p>
+            <button onClick={() => setActionNotice(null)} className="font-semibold text-indigo-600 hover:text-indigo-900">
+              Dismiss
+            </button>
+          </div>
+        )}
 
         {/* ERROR STATE */}
         {error && (
@@ -123,6 +155,13 @@ const AgronomistDashboard: React.FC = () => {
                 <div className="flex flex-wrap items-start gap-5">
                   <div className="w-40 shrink-0">
                     <PredictionImage imageId={item.prediction.image_id} className="h-32" />
+                    {(item.prediction.image_ids?.length ?? 0) > 1 && (
+                      <div className="mt-1.5 grid grid-cols-3 gap-1">
+                        {item.prediction.image_ids!.slice(1).map((id) => (
+                          <PredictionImage key={id} imageId={id} className="h-11" />
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center justify-between gap-3">
@@ -147,7 +186,7 @@ const AgronomistDashboard: React.FC = () => {
                     <p className="mt-1 text-sm text-gray-600">
                       Farmer: <span className="font-semibold">{item.prediction.farmer_name || item.prediction.farmer_email || `#${item.prediction.farmer_id}`}</span>
                       {' · '}AI predicted{' '}
-                      <span className="font-semibold">{item.prediction.predicted_disease}</span>
+                      <span className="font-semibold">{diseaseLabel(t, item.prediction.predicted_disease)}</span>
                       {' '}({(item.prediction.confidence * 100).toFixed(1)}%)
                     </p>
                     {item.prediction.farmer_location && (
@@ -168,7 +207,7 @@ const AgronomistDashboard: React.FC = () => {
                       {item.corrected_disease && (
                         <>
                           , actual disease{' '}
-                          <span className="font-semibold text-orange-700">{item.corrected_disease}</span>
+                          <span className="font-semibold text-orange-700">{diseaseLabel(t, item.corrected_disease)}</span>
                         </>
                       )}
                     </p>
@@ -177,6 +216,14 @@ const AgronomistDashboard: React.FC = () => {
                         {item.notes}
                       </p>
                     )}
+                    <button
+                      onClick={() => requestMorePhotos(item.prediction.id)}
+                      disabled={requestingPhotos === item.prediction.id}
+                      className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700 transition-colors hover:bg-indigo-100 disabled:opacity-60"
+                    >
+                      <ImagePlus className="h-3.5 w-3.5" />
+                      {requestingPhotos === item.prediction.id ? 'Sending...' : 'Request more photos'}
+                    </button>
                   </div>
                 </div>
 

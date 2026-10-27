@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { X, UserCog } from 'lucide-react';
 import apiClient from '@/services/api/axios';
 import { getErrorMessage } from '@/utils/errors';
+import { useTranslation } from '@/i18n/LocaleContext';
 
 /**
  * Self-service account settings — every signed-in user can update
@@ -25,6 +26,7 @@ export default function ProfileModal({
   onSaved,
   onClose,
 }: ProfileModalProps) {
+  const { t } = useTranslation();
   const [form, setForm] = useState({
     email: initialEmail,
     full_name: initialName,
@@ -119,7 +121,7 @@ export default function ProfileModal({
         )}
         {saved && (
           <p className="mt-4 rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700">
-            Profile updated.
+            {t('notices.profileUpdated')}
           </p>
         )}
 

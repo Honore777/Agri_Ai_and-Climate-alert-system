@@ -13,6 +13,7 @@ export interface PredictionData{
   farmer_longitude?: number | null;
   farmer_location_source?: string | null;
   image_id:number;
+  image_ids?: number[];
   crop_type:string | null;
   predicted_disease:string;
   confidence:number;

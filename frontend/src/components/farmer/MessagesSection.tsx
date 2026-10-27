@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { ExternalLink } from 'lucide-react';
 import apiClient from '@/services/api/axios';
+import PredictionDetailModal from '@/components/farmer/PredictionDetailModal';
 import { getErrorMessage } from '@/utils/errors';
 
 interface Message {
@@ -19,6 +21,7 @@ const MessagesSection = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
+  const [openPredictionId, setOpenPredictionId] = useState<number | null>(null);
 
   useEffect(() => {
     loadMessages();
@@ -148,11 +151,19 @@ const MessagesSection = () => {
               </p>
 
               {selectedMessage.prediction_id && (
-                <div className="mt-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
+                <button
+                  type="button"
+                  onClick={() => setOpenPredictionId(selectedMessage.prediction_id!)}
+                  className="mt-6 flex w-full items-center justify-between rounded-lg border border-blue-200 bg-blue-50 p-4 text-left transition-colors hover:bg-blue-100"
+                >
                   <p className="text-sm font-semibold text-gray-900">
-                    This message is about Prediction #{selectedMessage.prediction_id}
+                    About your scan #{selectedMessage.prediction_id}
+                    <span className="mt-0.5 block text-xs font-normal text-blue-700">
+                      Tap to see the photos and result you sent
+                    </span>
                   </p>
-                </div>
+                  <ExternalLink className="h-5 w-5 shrink-0 text-blue-600" />
+                </button>
               )}
             </div>
 
@@ -166,6 +177,13 @@ const MessagesSection = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {openPredictionId !== null && (
+        <PredictionDetailModal
+          predictionId={openPredictionId}
+          onClose={() => setOpenPredictionId(null)}
+        />
       )}
     </div>
   );

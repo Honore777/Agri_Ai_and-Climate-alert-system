@@ -5,6 +5,8 @@ import { Mail, MapPin, Navigation, Phone } from 'lucide-react';
 import { PredictionData } from '../../types/prediction.types';
 import PredictionImage from '../prediction/PredictionImage';
 import WeatherPanel from '../prediction/WeatherPanel';
+import { diseaseLabel } from '@/utils/disease';
+import { useTranslation } from '@/i18n/LocaleContext';
 
 interface PredictionCardProps {
   prediction: PredictionData;
@@ -18,6 +20,7 @@ const PredictionCard: React.FC<PredictionCardProps> = ({
   isSelected,
   onSelectPrediction,
 }) => {
+  const { t } = useTranslation();
   return (
     <div
       onClick={() => onSelectPrediction(prediction.id)}
@@ -29,9 +32,16 @@ const PredictionCard: React.FC<PredictionCardProps> = ({
         }
       `}
     >
-      {/* Disease Image */}
+      {/* Disease Image(s) — primary photo + any extras the farmer attached */}
       <div className="mb-4">
         <PredictionImage imageId={prediction.image_id} />
+        {(prediction.image_ids?.length ?? 0) > 1 && (
+          <div className="mt-2 grid grid-cols-3 gap-2">
+            {prediction.image_ids!.slice(1).map((id) => (
+              <PredictionImage key={id} imageId={id} className="h-16" />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Confidence Score Badge */}
@@ -96,7 +106,7 @@ const PredictionCard: React.FC<PredictionCardProps> = ({
       <div className="mb-4">
         <p className="text-gray-600 text-sm font-medium">AI Predicted Disease:</p>
         <p className="text-xl font-bold text-blue-600 mt-1">
-          {prediction.predicted_disease}
+          {diseaseLabel(t, prediction.predicted_disease)}
         </p>
       </div>
 

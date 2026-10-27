@@ -6,6 +6,7 @@ Endpoints for storing ML predictions and retrieving them for validation.
 """
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import datetime
@@ -24,6 +25,18 @@ from app.schemas.message import MessageResponse, MessageListResponse, MessageCre
 from app.api.v1.users import _build_location_path
 
 router = APIRouter(prefix="/predictions", tags=["predictions"])
+
+
+def _prediction_image_ids(pred: Prediction, db: Session) -> List[int]:
+    """All photos for a prediction: the primary image first, then any
+    extra photos the farmer attached afterwards."""
+    ids = [pred.image_id]
+    extra = db.query(Image.id).filter(
+        Image.prediction_id == pred.id,
+        Image.id != pred.image_id,
+    ).all()
+    ids.extend(row[0] for row in extra)
+    return ids
 
 
 @router.post("/", response_model=PredictionResponse)
@@ -171,6 +184,7 @@ def get_pending_predictions(
             farmer_latitude=farmer.latitude if farmer else None,
             farmer_longitude=farmer.longitude if farmer else None,
             farmer_location_source=farmer.location_source if farmer else None,
+            image_ids=_prediction_image_ids(pred, db),
             image_id=pred.image_id,
             crop_type=pred.crop_type,
             predicted_disease=pred.predicted_disease,
@@ -223,6 +237,7 @@ def get_my_reviewed_predictions(
             "prediction": {
                 "id": pred.id,
                 "image_id": pred.image_id,
+                "image_ids": _prediction_image_ids(pred, db),
                 "farmer_id": pred.farmer_id,
                 "farmer_name": farmer.full_name if farmer else None,
                 "farmer_email": farmer.email if farmer else None,
@@ -272,8 +287,28 @@ def get_prediction(
         # This requires querying Assignment model
         # For now: TODO implement region-based filtering
         pass
-    
-    return prediction
+
+    farmer = db.query(User).filter(User.id == prediction.farmer_id).first()
+    return PredictionResponse(
+        id=prediction.id,
+        farmer_id=prediction.farmer_id,
+        farmer_name=farmer.full_name if farmer else None,
+        farmer_email=farmer.email if farmer else None,
+        farmer_phone=farmer.phone_number if farmer else None,
+        farmer_location=_build_location_path(farmer, db) if farmer else None,
+        farmer_latitude=farmer.latitude if farmer else None,
+        farmer_longitude=farmer.longitude if farmer else None,
+        farmer_location_source=farmer.location_source if farmer else None,
+        image_id=prediction.image_id,
+        image_ids=_prediction_image_ids(prediction, db),
+        crop_type=prediction.crop_type,
+        predicted_disease=prediction.predicted_disease,
+        confidence=prediction.confidence,
+        model_version=prediction.model_version,
+        all_predictions=prediction.all_predictions,
+        created_at=prediction.created_at,
+        weather_snapshot=prediction.weather_snapshot,
+    )
 
 
 @router.get("/user/me", response_model=List[PredictionResponse])
@@ -290,12 +325,27 @@ def get_my_predictions(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Only farmers can view their predictions"
         )
-    
+
     predictions = db.query(Prediction).filter(
         Prediction.farmer_id == current_user.id
     ).order_by(Prediction.created_at.desc()).all()
-    
-    return predictions
+
+    return [
+        PredictionResponse(
+            id=p.id,
+            farmer_id=p.farmer_id,
+            image_id=p.image_id,
+            image_ids=_prediction_image_ids(p, db),
+            crop_type=p.crop_type,
+            predicted_disease=p.predicted_disease,
+            confidence=p.confidence,
+            model_version=p.model_version,
+            all_predictions=p.all_predictions,
+            created_at=p.created_at,
+            weather_snapshot=p.weather_snapshot,
+        )
+        for p in predictions
+    ]
 
 
 # ========================================
@@ -356,6 +406,8 @@ async def save_prediction(
         )
         
         db.add(prediction)
+        db.flush()  # prediction.id needed to link the primary image back
+        image.prediction_id = prediction.id
         db.commit()
         db.refresh(prediction)
 
@@ -365,16 +417,86 @@ async def save_prediction(
         create_snapshot_for_prediction(prediction, current_user, db)
 
         return prediction
-    
+
     except Exception as e:
         db.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to save prediction: {str(e)}"
         )
-    
 
 
+class AttachmentUploadRequest(BaseModel):
+    """Farmer attaching extra photos to an existing prediction."""
+    images: List[str]  # base64-encoded image payloads
+
+
+@router.post("/{prediction_id}/attachments", response_model=List[int])
+def add_prediction_attachments(
+    prediction_id: int,
+    payload: AttachmentUploadRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Farmer attaches extra photos to their own prediction — used when the
+    agronomist asks for more angles to confirm a diagnosis.
+    Returns the ids of the newly created images.
+    """
+    if current_user.role != "farmer":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only farmers can attach photos to a prediction"
+        )
+
+    prediction = db.query(Prediction).filter(
+        Prediction.id == prediction_id,
+        Prediction.farmer_id == current_user.id,
+    ).first()
+    if not prediction:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Prediction not found"
+        )
+
+    if not payload.images or len(payload.images) > 5:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Attach between 1 and 5 photos"
+        )
+
+    image_dir = "storage/predictions"
+    os.makedirs(image_dir, exist_ok=True)
+    new_ids: List[int] = []
+
+    try:
+        for i, b64 in enumerate(payload.images):
+            raw = base64.b64decode(b64)
+            timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S%f")
+            filename = f"attachment_{prediction_id}_{current_user.id}_{timestamp}_{i}.jpg"
+            file_path = os.path.join(image_dir, filename)
+            with open(file_path, 'wb') as f:
+                f.write(raw)
+
+            img = Image(
+                farmer_id=current_user.id,
+                prediction_id=prediction_id,
+                file_path=file_path,
+                image_metadata='Additional photo for agronomist review',
+            )
+            db.add(img)
+            db.flush()
+            new_ids.append(img.id)
+
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to save attachments: {str(e)}"
+        )
+
+    return new_ids
 
 from app.models.prediction_review import PredictionReview
 from app.schemas.prediction_review import PredictionReviewCreate, PredictionReviewResponse

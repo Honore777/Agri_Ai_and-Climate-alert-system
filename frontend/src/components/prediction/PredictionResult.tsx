@@ -4,6 +4,8 @@ import React from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import { PredictionResponse, SavedPrediction } from '../../services/predictions.service';
 import WeatherPanel from './WeatherPanel';
+import { diseaseLabel } from '@/utils/disease';
+import { useTranslation } from '@/i18n/LocaleContext';
 
 interface PredictionResultProps {
   prediction: SavedPrediction | null;
@@ -18,6 +20,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
   error,
   isSaving = false
 }) => {
+  const { t } = useTranslation();
   // Exit early if nothing to show
   if (!prediction && !inferenceResult && !error && !isSaving) {
     return null;
@@ -28,7 +31,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
     return (
       <div className="mt-6 p-4 bg-blue-50 border border-blue-300 rounded-lg flex items-center gap-3">
         <div className="animate-spin">⏳</div>
-        <p className="text-blue-700 font-semibold">Saving prediction to database...</p>
+        <p className="text-blue-700 font-semibold">{t('predict.saving')}</p>
       </div>
     );
   }
@@ -75,20 +78,20 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
       {prediction && (
         <div className="mb-4 p-3 bg-green-100 border border-green-400 rounded flex items-center gap-2">
           <CheckCircle2 className="h-5 w-5 text-green-600" />
-          <p className="text-green-800 font-semibold text-sm">Prediction saved to database successfully!</p>
+          <p className="text-green-800 font-semibold text-sm">{t('predict.saved')}</p>
         </div>
       )}
 
       {/* Main Result */}
       <div className="mb-6">
-        <p className="text-gray-600 text-sm font-medium mb-2">DETECTED DISEASE</p>
-        <p className="text-3xl font-bold text-green-700">{disease}</p>
+        <p className="text-gray-600 text-sm font-medium mb-2">{t('predict.detected')}</p>
+        <p className="text-3xl font-bold text-green-700">{diseaseLabel(t, disease)}</p>
       </div>
 
       {/* Confidence Bar */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
-          <p className="text-gray-700 font-medium">Confidence</p>
+          <p className="text-gray-700 font-medium">{t('predict.confidence')}</p>
           <p className="text-lg font-bold text-gray-800">{confidencePercent}%</p>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
@@ -101,12 +104,12 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
 
       {/* All Predictions */}
       <div>
-        <p className="text-gray-700 font-semibold mb-3">All Predictions (Top 5)</p>
+        <p className="text-gray-700 font-semibold mb-3">{t('predict.topPredictions')}</p>
         <div className="space-y-2">
           {sortedPredictions.map(([pred_disease, score]) => (
             <div key={pred_disease} className="flex items-center gap-3">
               <span className="text-xs font-medium text-gray-600 w-24 truncate">
-                {pred_disease}
+                {diseaseLabel(t, pred_disease)}
               </span>
               <div className="flex-1 bg-white rounded-full h-6 overflow-hidden border border-gray-200">
                 <div
@@ -125,7 +128,7 @@ export const PredictionResult: React.FC<PredictionResultProps> = ({
       {/* Tips */}
       <div className="mt-6 p-4 bg-blue-100 border border-blue-300 rounded">
         <p className="text-sm text-blue-800">
-          <strong>💡 Tip:</strong> If confidence is low, try taking clearer photos of the affected areas.
+          {t('predict.lowConfidenceTip')}
         </p>
       </div>
 

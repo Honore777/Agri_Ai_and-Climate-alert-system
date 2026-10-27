@@ -8,6 +8,23 @@ from .model_loader import get_model
 from .preprocessing import preprocess_image
 from typing import Dict
 
+# Rwanda-focused classes (classes2): the stage-2 ResNet18 model was
+# trained on the maize / potato / tomato classes relevant to Rwandan
+# crops. Index order must match the training class mapping exactly.
+DISEASE_CLASSES2 = [
+    "Maize_Cercospora_leaf_spot",
+    "Maize_Common_rust",
+    "Maize_Northern_Leaf_Blight",
+    "Maize_healthy",
+    "Potato_Early_blight",
+    "Potato_Late_blight",
+    "Potato_healthy",
+    "Tomato_Early_blight",
+    "Tomato_Late_blight",
+    "Tomato_Yellow_Leaf_Curl_Virus",
+    "Tomato_healthy",
+]
+
 DISEASE_CLASSES = [
     "Apple_Black_rot",
     "Apple_Cedar_apple_rust",
@@ -56,22 +73,22 @@ def predict(image_bytes: bytes, device: str='cpu') -> Dict:
     if not TORCH_AVAILABLE:
         # Return a mock prediction when torch is not available
         return {
-            'disease': 'Apple_healthy',
+            'disease': 'Maize_healthy',
             'confidence': 95.0,
-            'all_predictions': {cls: 0.0 for cls in DISEASE_CLASSES}
+            'all_predictions': {cls: 0.0 for cls in DISEASE_CLASSES2}
         }
-    
+
     try:
         image_tensor = preprocess_image(image_bytes)
 
         model = get_model(device=device)
-        
+
         if model is None:
             # Return mock prediction if model couldn't load
             return {
-                'disease': 'Apple_healthy',
+                'disease': 'Maize_healthy',
                 'confidence': 95.0,
-                'all_predictions': {cls: 0.0 for cls in DISEASE_CLASSES}
+                'all_predictions': {cls: 0.0 for cls in DISEASE_CLASSES2}
             }
 
         with torch.no_grad():
@@ -83,10 +100,10 @@ def predict(image_bytes: bytes, device: str='cpu') -> Dict:
             probs = probabilities.cpu().numpy()[0]
             top_prob = float(probs.max())
             top_class_idx = probs.argmax()
-            top_disease = DISEASE_CLASSES[top_class_idx]
+            top_disease = DISEASE_CLASSES2[top_class_idx]
 
             all_predictions = {
-                DISEASE_CLASSES[i]: float(probs[i]) for i in range(len(DISEASE_CLASSES))
+                DISEASE_CLASSES2[i]: float(probs[i]) for i in range(len(DISEASE_CLASSES2))
             }
 
             return {

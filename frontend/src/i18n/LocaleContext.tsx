@@ -3,10 +3,11 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import en from '../../messages/en.json';
 import rw from '../../messages/rw.json';
+import fr from '../../messages/fr.json';
 
-export type Locale = 'en' | 'rw';
+export type Locale = 'en' | 'rw' | 'fr';
 
-const dictionaries: Record<Locale, typeof en> = { en, rw };
+const dictionaries: Record<Locale, typeof en> = { en, rw, fr };
 const STORAGE_KEY = 'agri_locale';
 
 type Messages = typeof en;
@@ -36,13 +37,13 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
   // Restore saved language after mount (localStorage is client-only)
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (saved === 'en' || saved === 'rw') setLocaleState(saved);
+    if (saved === 'en' || saved === 'rw' || saved === 'fr') setLocaleState(saved);
   }, []);
 
   const setLocale = (next: Locale) => {
     setLocaleState(next);
     window.localStorage.setItem(STORAGE_KEY, next);
-    document.documentElement.lang = next === 'rw' ? 'rw' : 'en';
+    document.documentElement.lang = next;
   };
 
   const t = useMemo(() => {

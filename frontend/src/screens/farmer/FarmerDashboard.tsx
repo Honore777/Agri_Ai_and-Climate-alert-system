@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MessageSquare, ScanSearch, Sprout, UserCheck } from 'lucide-react';
+import { History, MessageSquare, ScanSearch, Sprout, UserCheck } from 'lucide-react';
 import DashboardHeader from '@/components/layout/DashboardHeader';
 import { usePrediction } from '@/hooks/usePredictions';
 import { ImageUpload } from '@/components/prediction/ImageUpload';
@@ -11,12 +11,14 @@ import { PredictionResult } from '@/components/prediction/PredictionResult';
 import AgronomistInfoSection from '@/components/farmer/AgronomistInfoSection';
 import LocationCard from '@/components/farmer/LocationCard';
 import MessagesSection from '@/components/farmer/MessagesSection';
+import MyScansSection from '@/components/farmer/MyScansSection';
 import { useTranslation } from '@/i18n/LocaleContext';
 
-type Tab = 'upload' | 'agronomist' | 'messages';
+type Tab = 'upload' | 'scans' | 'agronomist' | 'messages';
 
 const TABS: { id: Tab; labelKey: string; icon: typeof ScanSearch }[] = [
   { id: 'upload', labelKey: 'dashboard.tabs.detection', icon: ScanSearch },
+  { id: 'scans', labelKey: 'dashboard.tabs.scans', icon: History },
   { id: 'agronomist', labelKey: 'dashboard.tabs.agronomist', icon: UserCheck },
   { id: 'messages', labelKey: 'dashboard.tabs.messages', icon: MessageSquare },
 ];
@@ -131,6 +133,7 @@ export default function FarmerDashboard() {
           </>
         )}
 
+        {activeTab === 'scans' && <MyScansSection />}
         {activeTab === 'agronomist' && <AgronomistInfoSection />}
         {activeTab === 'messages' && <MessagesSection />}
       </main>

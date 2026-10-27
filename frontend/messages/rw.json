@@ -7,53 +7,53 @@
     "getStarted": "Tangira",
     "loading": "Tegereza…",
     "or": "cyangwa",
-    "optional": "ntibisabwa",
+    "optional": "ntibisabwa(optional)",
     "language": "Ururimi"
   },
   "roles": {
     "farmer": "Umuhinzi",
-    "agronomist": "Agworonome",
+    "agronomist": "Agoronome",
     "cooperative_admin": "Umuyobozi wa Koperative",
-    "system_admin": "Umuyobozi Mukuru"
+    "system_admin": "Umuyobozi Mukuru wa sisitemi"
   },
   "nav": {
     "signIn": "Injira",
     "getStarted": "Tangira"
   },
   "landing": {
-    "badge": "Kurinda ibihingwa dukoresheje AI",
+    "badge": "Kurinda ibihingwa dukoresheje Ubwenge karemano(AI)",
     "heroTitle1": "Vumbura indwara z'ibihingwa",
     "heroTitle2": "mbere yo gukwirakwira",
     "heroSubtitle": "Agri AI isesengura amafoto y'ibihingwa ako kanya, ikahuza abahinzi n'abahanga mu buhinzi — igahindura kamera ya telefoni uburyo bwo kumenya indwara hakiri kare.",
     "startDetecting": "Tangira kumenya indwara",
     "photoCaption1": "Umuhinzi afata ifoto y'igihingwa cyafashwe n'indwara",
-    "photoCaption2": "Isuzuma mu murima — kamera iba ivuriro",
+    "photoCaption2": "Isuzuma mu murima — kamera iba ivuriro(agoronome)",
     "stats": {
       "diseases": "Indwara zisuzumwa",
       "accuracy": "Precision ya AI",
       "roles": "Inshingano",
       "availability": "Kuboneka"
     },
-    "howTitle": "Kuva ku ifoto kugeza ku muti muri intambwe eshatu",
+    "howTitle": "Kuva ku ifoto kugeza kugisubizo cya agoronome mu intambwe eshatu",
     "howSubtitle": "Byakozwe ku bahinzi bo mu murima — byihuse, byoroshye, kandi bifashijwe n'impuguke.",
     "steps": {
       "capture": { "title": "Fata ifoto", "description": "Fata ifoto isobanutse y'igihingwa cyafashwe n'indwara ukoresheje telefoni iyo ari yo yose." },
-      "detect": { "title": "Suzuma", "description": "Icyitegererezo cyacu kivumbura indwara gifite urugero rw'ukuri ako kanya." },
-      "act": { "title": "Gikorwa", "description": "Agworonome yemeza isuzuma kandi akugira inama zo kwivuza." }
+      "detect": { "title": "Suzuma", "description": "Agri Ai cyacu kivumbura indwara gifite urugero rw'ukuri ako kanya." },
+      "act": { "title": "Gikorwa", "description": "Agoronome yemeza isuzuma kandi akugira inama zo kurinda ibihigwa byawe afashijwe namakuri yikirere mu gace kawe." }
     },
     "featuresTitle": "Byubatswe ku ntego zose z'ubuhinzi",
     "featuresSubtitle": "Kuva ku muhinzi ku giti cye kugeza ku bayobozi ba koperative — urubuga rumwe, uruhare rwose.",
     "features": {
-      "instantAnalysis": { "title": "Isesengura Ryihuse", "description": "Ohereza ifoto y'igihingwa ukirengero isuzuma rya AI mu masegonda — nta laboratuwari ikenewe." },
-      "expertValidation": { "title": "Kwemeza n'Impuguke", "description": "Abagworonome bo mu turere basuzuma ibyavuzwe byose bakohereza inama zo kwivuza ku bahinzi." },
-      "continuousLearning": { "title": "Kwiga Buhoraho", "description": "Buri kwemeza kw'impuguke kongera ubuhanga bw'icyitegererezo ku muryango wose." },
-      "secure": { "title": "Umutekano Uhanitse", "description": "Uruhare rukurikirana abahinzi, abagworonome, abayobozi ba koperative n'abayobozi bakuru." },
-      "regionalCoverage": { "title": "Ukwaguka mu Turere", "description": "Koperative zagabanya abagworonome mu turere, imirenge n'utugari kugira ngo nta muhinzi usigara inyuma." },
-      "diseaseClasses": { "title": "Indwara 38", "description": "Icyitegererezo kisuzuma indwara zimenyekane cyane mu nyanya, ibirayi, ibigori n'ibindi." }
+      "instantAnalysis": { "title": "Isesengura Ryihuse", "description": "Ohereza ifoto y'igihingwa ubone isuzuma rya AI mu masegonda — nta laboratuwari ikenewe." },
+      "expertValidation": { "title": "Kwemeza n'Impuguke", "description": "Abagoronome bo mu turere basuzuma ibyavuzwe byose bakohereza inama zo kurinda ibihingwa ku bahinzi." },
+      "continuousLearning": { "title": "Kwiga Buhoraho", "description": "Buri kwemeza kw'impuguke kongera ubuhanga bwa Agri AI ku muryango wose." },
+      "secure": { "title": "Umutekano Uhanitse", "description": "Uruhare rukurikirana abahinzi, abagoronome, abayobozi ba koperative n'abayobozi bakuru." },
+      "regionalCoverage": { "title": "Ukwaguka mu Turere", "description": "Koperative zagabanya abagoronome mu turere, imirenge n'utugari kugira ngo nta muhinzi usigara inyuma." },
+      "diseaseClasses": { "title": "Indwara 11", "description": "Icyitegererezo gikungahaye ku bihingwa by'ingenzi mu Rwanda — indwara zimenyekane cyane z'ibigori, ibirayi n'inyanya." }
     },
     "contextTitle": "Kuva mu mirima y'u Rwanda kugeza ku isuzuma ry'ako kanya",
-    "contextText1": "Indwara z'ibihingwa zishobora kurimbura umusaruro w'igihembwe cyose mbere y'uko umuhinzi agera ku mpuguke. Agri AI ifunga iyo nkunga — ifoto yafatiwe mu murima iba isuzuma mu masegonda, rikazasuzumwa n'agworonome uzuri ukarere kawe.",
-    "contextText2": "Buri cyitegererezo gifite amakuru y'ikirere k'aho uherereye: imvura, ubushyuhe n'ubushuhe bw'ikirere — kugira ngo inama zihuze n'urugori rwawe, ntabwo ari iz'igitabo gisanzwe.",
+    "contextText1": "Indwara z'ibihingwa zishobora kurimbura umusaruro w'igihembwe cyose mbere y'uko umuhinzi agera ku mpuguke. Agri AI icyemura icyo kibazo— ifoto yafatiwe mu murima iba isuzuma mu masegonda, rikazasuzumwa n'agoronome uzi neza imiterere  yagace uherereyemo.",
+    "contextText2": "Buri cyitegererezo gifite amakuru y'ikirere k'aho uherereye: imvura, n'ubushyuhe bw'ikirere — kugira ngo ikemezo cya agronome gihuzwe nuburwayi bwibihingwa byawe.",
     "ctaTitle": "Witeguye kurinda umusaruro wawe?",
     "ctaSubtitle": "Iyandikishe ukoresheje kode uhabwa na koperative yawe, utangire kumenya indwara uyu munsi.",
     "ctaButton": "Fungura konti yawe",
@@ -61,12 +61,12 @@
     "footer": { "copyright": "Agri AI Platform. Uburenganzira bwose bwifashe." }
   },
   "footer": {
-    "description": "Urubuga rw'ubuhanga mu buhinzi ruhindura kamera ya telefoni uburyo bwo kumenya indwara z'ibihingwa hakiri kare — isuzuma rya AI, isuzuma ry'abagworonome, n'amakuru y'ikirere kuri buri murima.",
+    "description": "Urubuga rw'ubuhanga mu buhinzi ruhindura kamera ya telefoni uburyo bwo kumenya indwara z'ibihingwa hakiri kare — isuzuma rya AI, isuzuma ry'abagoronome, n'amakuru y'ikirere kuri buri murima.",
     "platform": "Urubuga",
     "credits": "Byakozwe na",
     "poweredBy": "Byakozwe na",
     "madeIn": "Kigali, u Rwanda",
-    "secure": "Uruhare rukurikirana — abahinzi, abagworonome, koperative, abayobozi",
+    "secure": "Uruhare rukurikirana — abahinzi, abagoronome, koperative, abayobozi",
     "mission": "Kurinda umusaruro, ifoto imwe imwe",
     "nsrNote": "Amakuru y'ahantu yujuje ibipimo bya NISR (Ikigo cy'Igihugu cy'ibarurishamibare mu Rwanda)."
   },
@@ -74,7 +74,7 @@
     "signInTitle": "Injira muri konti yawe",
     "registerTitle": "Fungura konti yawe",
     "secureTagline": "Urubuga rwizewe rw'ubuhanga mu buhinzi",
-    "registeredBanner": "Iyandikishwa ryagenze neza. Injira ukoresheje konti yawe nshya.",
+    "registeredBanner": "Kwiyandikisha byagenze neza. Injira ukoresheje konti yawe nshya.",
     "email": "Imeyili",
     "emailPlaceholder": "wowe@urugero.com",
     "password": "Ijambobanga",
@@ -97,7 +97,7 @@
     "select": "Hitamo",
     "loadingLocations": "Tegereza…",
     "noProvinces": "Nta ntara ziboneka",
-    "signingIn": "Urinjira…",
+    "signingIn": "Turikukwinjiza…",
     "signIn": "Injira",
     "createAccount": "Fungura konti",
     "creatingAccount": "Konti irimo gufungurwa…",
@@ -125,24 +125,25 @@
       "weakPassword": "Ijambobanga ritagikwiye. Koresha inyuguti nkuru, ntoya, umubare n'ikimenyetso.",
       "invalidInput": "Amakuru watanze ntabwo ari yo. Reba neza.",
       "networkError": "Nta murongo w'interineti. Ese seriveri irakora?",
-      "registerFailed": "Iyandikishwa ntiriyagenze neza. Ongera ugerageze."
+      "registerFailed": "Iyandikishwa ntibagenze neza. Ongera ugerageze."
     }
   },
   "dashboard": {
     "farmerTitle": "Ikibaho cy'Umuhinzi",
     "farmerSubtitle": "Gukurikirana ubuzima bw'ibihingwa",
-    "agronomistTitle": "Ikibaho cy'Agworonome",
+    "agronomistTitle": "Ikibaho cy'Agoronome",
     "adminTitle": "Ikibaho cy'Umuyobozi",
     "cooperativeTitle": "Ikibaho cya Koperative",
     "tabs": {
       "detection": "Kumenya Indwara",
-      "agronomist": "Agworonome Wanjye",
+      "scans": "Isuzuma Zanjye",
+      "agronomist": "Agoronome Wanjye",
       "messages": "Ubutumwa"
     }
   },
   "farmer": {
     "detectionTitle": "Kumenya Indwara z'Ibihingwa",
-    "detectionSubtitle": "Ohereza ifoto y'igihingwa cyawe kugira ngo umenye indwara ukirengero isuzuma ako kanya",
+    "detectionSubtitle": "Ohereza ifoto y'igihingwa cyawe kugira ngo umenye indwara ukurikirane  isuzuma ako kanya",
     "cropType": "Ubwoko bw'Igihingwa",
     "cropTypePlaceholder": "urugero: Inyanya, Ibirayi, Ibigori",
     "tipsTitle": "Inama zo kubona ibisubizo byiza",
@@ -153,5 +154,50 @@
       "formats": "Uburyo bwemerewe: JPG, PNG",
       "saved": "Ibyavuzwe bibikwa ako kanya kugira ngo agworonome abisuzume"
     }
+  },
+  "predict": {
+    "selectImage": "Kanda uhitemo ifoto",
+    "processing": "Biri gukorwa…",
+    "dragDrop": "cyangwa shyirayo ifoto",
+    "formats": "JPG, PNG byemerewe",
+    "imageOnly": "Hitamo ifoto gusa (JPG, PNG, n'ibindi)",
+    "preview": "Igaragaza mbere",
+    "clear": "Siba",
+    "fileName": "Izina ry'idosiye",
+    "fileSize": "Ingano",
+    "fileType": "Ubwoko",
+    "getPrediction": "Suzuma indwara",
+    "analyzing": "Isuzuma ry'ifoto riri gukorwa…",
+    "detected": "Indwara yabonetse",
+    "confidence": "Icyizere",
+    "topPredictions": "Ibyo bishoboka cyane (5)",
+    "saved": "Isuzuma ryabitswe neza!",
+    "saving": "Isuzuma rirabikwa…",
+    "lowConfidenceTip": "Niba icyizere kiri hasi, gerageza gufata amafoto asobanutse y'aharemwe n'indwara."
+  },
+  "diseases": {
+    "Maize_Cercospora_leaf_spot": "Indwara y'utubara tw'ikijuju ku mababi y'ibigori",
+    "Maize_Common_rust": "Ingese y'ibigori",
+    "Maize_Northern_Leaf_Blight": "Indwara yumisha amababi y'ibigori",
+    "Maize_healthy": "Ibigori bizima",
+    "Potato_Early_blight": "Indwara y'utubara ku mababi y'ibirayi",
+    "Potato_Late_blight": "Ububore bw'ibirayi",
+    "Potato_healthy": "Ibirayi bizima",
+    "Tomato_Early_blight": "Indwara y'ibibara ku mababi y'inyanya",
+    "Tomato_Late_blight": "Ububore bw'inyanya",
+    "Tomato_Yellow_Leaf_Curl_Virus": "Virusi y'inyanya ihindura amababi umuhondo akanihina",
+    "Tomato_healthy": "Inyanya nzima",
+    "Tomato_Early_Blight": "Indwara y'ibibara ku mababi y'inyanya",
+    "Tomato Early blight": "Indwara y'ibibara ku mababi y'inyanya",
+    "Strawberry_healthy": "Amakembe meza"
+  },
+  "notices": {
+    "photoRequestSent": "Ubutumwa bwo gusaba amafoto bwoherejwe umuhinzi.",
+    "photoRequestFailed": "Kohereza ubutumwa byanze",
+    "photosAdded": "Amafoto yongeweho — agworonome wawe arashobora kuyabona.",
+    "profileUpdated": "Umwirondoro wahinduwe.",
+    "locationSaved": "Aho uherereye byabitswe — isuzuma rikurikira rizafatanya n'imiterere y'ikirere y'aho uri, kandi agworonome wawe azabona neza aho uherereye.",
+    "requestPhotosTitle": "Nyamuneka wongerere amafoto",
+    "requestPhotosBody": "Kugira ngo twemeze isuzuma ryawe, nyamuneka wohereze amafoto 2-3 y'igihingwa kigarijwe n'indwara: ifoto y'amababi yaremwe hafi, n'ifoto yerekana igihingwa cyose. Fungura isuzuma mu kice 'Isuzuma Zanjye' hanyuma ukande 'Ongeraho ifoto'."
   }
 }

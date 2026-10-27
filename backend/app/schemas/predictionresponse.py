@@ -44,6 +44,8 @@ class PredictionResponse(BaseModel):
     all_predictions: Optional[Dict[str, float]] = None
     created_at: datetime
     weather_snapshot: Optional[WeatherSnapshotRead] = None
+    # Primary image first, then extra photos the farmer attached later
+    image_ids: Optional[List[int]] = None
 
     class Config:
         from_attributes = True

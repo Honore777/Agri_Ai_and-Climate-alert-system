@@ -30,7 +30,9 @@ def load_model(model_path: str=None,device:str='cpu'):
     print('Loading model instance....')
 
     if model_path is None:
-        model_path=Path(__file__).parent.parent.parent.parent / 'models' / 'crop_disease_detection_v1_finetuned.pth'
+        # Rwanda-focused model: 11 disease classes across maize, potato
+        # and tomato (stage-2 fine-tuned ResNet18, val acc ~99.4%).
+        model_path=Path(__file__).parent.parent.parent.parent / 'models' / 'plant_disease_11class_resnet18_stage2_best_v1.pth'
 
         model_path=str(model_path)
 
@@ -41,7 +43,7 @@ def load_model(model_path: str=None,device:str='cpu'):
 
         num_features = model.fc.in_features
 
-        model.fc = nn.Linear(num_features, 38)
+        model.fc = nn.Linear(num_features, 11)
 
         state_dict = torch.load(model_path, map_location=device)
         model.load_state_dict(state_dict)

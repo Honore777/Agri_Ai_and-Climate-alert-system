@@ -5,6 +5,8 @@ import { CheckCircle2, Mail, PencilLine } from 'lucide-react';
 import { PredictionData } from '../../types/prediction.types';
 import { ReviewData } from '../../types/validation.types';
 import { getErrorMessage } from '../../utils/errors';
+import { diseaseLabel } from '@/utils/disease';
+import { useTranslation } from '@/i18n/LocaleContext';
 
 interface PredictionReviewFormProps {
   prediction: PredictionData;
@@ -28,6 +30,7 @@ const PredictionReviewForm: React.FC<PredictionReviewFormProps> = ({
   isSubmitting,
   onCancel,
 }) => {
+  const { t } = useTranslation();
   // FORM STATE
   const [status, setStatus] = useState<'confirmed' | 'corrected'>('confirmed');
   const [cropType, setCropType] = useState('');
@@ -163,7 +166,7 @@ const PredictionReviewForm: React.FC<PredictionReviewFormProps> = ({
               <div>
                 <p className="text-sm text-blue-700">Disease:</p>
                 <p className="font-bold text-blue-900 text-lg">
-                  {prediction.predicted_disease}
+                  {diseaseLabel(t, prediction.predicted_disease)}
                 </p>
               </div>
               <div>

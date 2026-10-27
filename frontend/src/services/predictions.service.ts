@@ -42,6 +42,8 @@ export interface SavedPrediction {
   id: number;
   farmer_id: number;
   image_id: number;
+  /** Primary image first, then farmer-attached extras */
+  image_ids?: number[];
   crop_type: string | null;
   predicted_disease: string;
   confidence: number;
@@ -49,6 +51,13 @@ export interface SavedPrediction {
   model_version: string;
   created_at: string;
   weather_snapshot?: WeatherSnapshot | null;
+  farmer_name?: string | null;
+  farmer_email?: string | null;
+  farmer_phone?: string | null;
+  farmer_location?: string | null;
+  farmer_latitude?: number | null;
+  farmer_longitude?: number | null;
+  farmer_location_source?: string | null;
 }
 
 const INFERENCE_API = '/inference/predict';
@@ -123,6 +132,22 @@ const predictionsService = {
       }
       throw new Error(error.message || 'Failed to save prediction to database');
     }
+  },
+
+  /** Farmer's own prediction history (newest first). */
+  async getMyPredictions(): Promise<SavedPrediction[]> {
+    const res = await apiClient.get<SavedPrediction[]>('/predictions/user/me');
+    return res.data;
+  },
+
+  /** Attach extra photos to an existing prediction (agronomist may ask for more angles). */
+  async addAttachments(predictionId: number, files: File[]): Promise<number[]> {
+    const images = await Promise.all(files.map(fileToBase64));
+    const res = await apiClient.post<number[]>(
+      `/predictions/${predictionId}/attachments`,
+      { images }
+    );
+    return res.data;
   },
 };
 

@@ -29,6 +29,7 @@ export interface ReviewedItem {
   prediction: {
     id: number;
     image_id: number;
+    image_ids?: number[];
     farmer_id: number;
     farmer_name?: string | null;
     farmer_email?: string | null;

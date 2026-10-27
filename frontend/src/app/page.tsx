@@ -34,8 +34,8 @@ const stepDefs = [
 ];
 
 const statDefs = [
-  { value: '38', labelKey: 'landing.stats.diseases' },
-  { value: '99.6%', labelKey: 'landing.stats.accuracy' },
+  { value: '11', labelKey: 'landing.stats.diseases' },
+  { value: '99.4%', labelKey: 'landing.stats.accuracy' },
   { value: '4', labelKey: 'landing.stats.roles' },
   { value: '24/7', labelKey: 'landing.stats.availability' },
 ];

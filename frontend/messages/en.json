@@ -49,7 +49,7 @@
       "continuousLearning": { "title": "Continuous Learning", "description": "Every expert validation feeds back into the model, improving accuracy for the whole community." },
       "secure": { "title": "Secure by Design", "description": "Role-based access for farmers, agronomists, cooperative admins, and system administrators." },
       "regionalCoverage": { "title": "Regional Coverage", "description": "Cooperatives assign agronomists to districts, sectors, and cells so no farmer is left behind." },
-      "diseaseClasses": { "title": "38 Disease Classes", "description": "The model covers the most common crop diseases across tomatoes, potatoes, maize, and more." }
+      "diseaseClasses": { "title": "11 Disease Classes", "description": "Focused on Rwanda's key crops — the most common diseases of maize, potato, and tomato." }
     },
     "contextTitle": "From Rwanda's fields to real-time diagnosis",
     "contextText1": "Crop diseases can wipe out a season's work before a farmer ever reaches an expert. Agri AI closes that gap — a photo taken in the field becomes a diagnosis in seconds, reviewed by a real agronomist who knows your district.",
@@ -136,6 +136,7 @@
     "cooperativeTitle": "Cooperative Dashboard",
     "tabs": {
       "detection": "Disease Detection",
+      "scans": "My Scans",
       "agronomist": "My Agronomist",
       "messages": "Messages"
     }
@@ -153,5 +154,50 @@
       "formats": "Supported formats: JPG, PNG",
       "saved": "Predictions are automatically saved for agronomist review"
     }
+  },
+  "predict": {
+    "selectImage": "Click to select an image",
+    "processing": "Processing…",
+    "dragDrop": "or drag and drop",
+    "formats": "JPG, PNG supported",
+    "imageOnly": "Please select an image file (JPG, PNG, etc.)",
+    "preview": "Preview",
+    "clear": "Clear",
+    "fileName": "File name",
+    "fileSize": "File size",
+    "fileType": "File type",
+    "getPrediction": "Get prediction",
+    "analyzing": "Analyzing image…",
+    "detected": "Detected disease",
+    "confidence": "Confidence",
+    "topPredictions": "Top predictions",
+    "saved": "Prediction saved to database successfully!",
+    "saving": "Saving prediction to database…",
+    "lowConfidenceTip": "If confidence is low, try taking clearer photos of the affected areas."
+  },
+  "diseases": {
+    "Maize_Cercospora_leaf_spot": "Maize gray leaf spot (Cercospora)",
+    "Maize_Common_rust": "Maize common rust",
+    "Maize_Northern_Leaf_Blight": "Maize northern leaf blight",
+    "Maize_healthy": "Healthy maize",
+    "Potato_Early_blight": "Potato early blight",
+    "Potato_Late_blight": "Potato late blight",
+    "Potato_healthy": "Healthy potato",
+    "Tomato_Early_blight": "Tomato early blight",
+    "Tomato_Late_blight": "Tomato late blight",
+    "Tomato_Yellow_Leaf_Curl_Virus": "Tomato yellow leaf curl virus",
+    "Tomato_healthy": "Healthy tomato",
+    "Tomato_Early_Blight": "Tomato early blight",
+    "Tomato Early blight": "Tomato early blight",
+    "Strawberry_healthy": "Healthy strawberry"
+  },
+  "notices": {
+    "photoRequestSent": "Photo request sent to the farmer.",
+    "photoRequestFailed": "Could not send the photo request",
+    "photosAdded": "Photos added — your agronomist can see them now.",
+    "profileUpdated": "Profile updated.",
+    "locationSaved": "Location saved — your next predictions will include precise weather and your agronomist can see exactly where you are.",
+    "requestPhotosTitle": "Please add more photos",
+    "requestPhotosBody": "To confirm the diagnosis for your scan, please upload 2-3 more photos of the affected crop: a close-up of the damaged leaves/fruit and a wider shot of the plant. Open the scan in your My Scans tab and tap \"Add photo\"."
   }
 }
