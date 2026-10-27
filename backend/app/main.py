@@ -19,6 +19,7 @@ app.add_middleware(
         "http://localhost:8000",
         "http://localhost",
         "http://127.0.0.1",
+        "https://agri-ai-and-climate-alert-system.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
