@@ -152,11 +152,16 @@ def create_snapshot_for_prediction(
     """
     latitude, longitude, source = resolve_coordinates(user, db)
     if latitude is None:
+        print(f"[WEATHER] No coordinates resolved for user {user.id}")
         return None
 
     try:
         payload = fetch_weather(latitude, longitude)
-    except requests.RequestException:
+    except requests.RequestException as e:
+        print(f"[WEATHER] Open-Meteo call failed ({latitude},{longitude}): {e}")
+        return None
+    except Exception as e:
+        print(f"[WEATHER] Snapshot failed ({latitude},{longitude}): {e}")
         return None
 
     data = {
