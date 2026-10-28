@@ -8,9 +8,9 @@ from .model_loader import get_model
 from .preprocessing import preprocess_image
 from typing import Dict
 
-# Rwanda-focused classes (classes2): the stage-2 ResNet18 model was
-# trained on the maize / potato / tomato classes relevant to Rwandan
-# crops. Index order must match the training class mapping exactly.
+# Rwanda-focused classes (classes2): these classes are the ones that the model was trained on
+# and are relevant to Rwandan crops.
+
 DISEASE_CLASSES2 = [
     "Maize_Cercospora_leaf_spot",
     "Maize_Common_rust",
@@ -24,7 +24,7 @@ DISEASE_CLASSES2 = [
     "Tomato_Yellow_Leaf_Curl_Virus",
     "Tomato_healthy",
 ]
-
+#this are the old classes that i used to for transfer learning and fine tuning
 DISEASE_CLASSES = [
     "Apple_Black_rot",
     "Apple_Cedar_apple_rust",
