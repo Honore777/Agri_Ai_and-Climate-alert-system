@@ -138,8 +138,29 @@
       "detection": "Détection de maladies",
       "scans": "Mes analyses",
       "agronomist": "Mon agronome",
-      "messages": "Messages"
+      "messages": "Messages",
+      "outbreaks": "Épidémies"
     }
+  },
+  "outbreaks": {
+    "title": "Foyers de maladies",
+    "subtitle": "Activité des analyses dans votre coopérative — ce qui se propage et où.",
+    "alerts": "Alertes d'épidémie",
+    "reportsIn": "signalements à",
+    "lastDays": "au cours des 30 derniers jours",
+    "reports7d": "Signalements (7 j)",
+    "reports30d": "Signalements (30 j)",
+    "diseased30d": "Malades (30 j)",
+    "healthy30d": "Saines (30 j)",
+    "diseasesTitle": "Maladies signalées (30 jours)",
+    "noPredictions": "Aucune prédiction dans votre organisation pour le moment.",
+    "thisWeek": "cette semaine",
+    "hotspots": "Zones chaudes (30 jours)",
+    "noReports": "Aucun signalement de maladie pour le moment.",
+    "weeklyTrend": "Tendance hebdomadaire",
+    "noData": "Pas encore de données.",
+    "reports": "signalements",
+    "loadError": "Impossible de charger les données d'épidémie"
   },
   "farmer": {
     "detectionTitle": "Détection des maladies des cultures",

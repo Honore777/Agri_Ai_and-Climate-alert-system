@@ -138,8 +138,29 @@
       "detection": "Disease Detection",
       "scans": "My Scans",
       "agronomist": "My Agronomist",
-      "messages": "Messages"
+      "messages": "Messages",
+      "outbreaks": "Outbreaks"
     }
+  },
+  "outbreaks": {
+    "title": "Disease Outbreaks",
+    "subtitle": "Aggregated scan activity across your cooperative — what's spreading and where.",
+    "alerts": "Outbreak alerts",
+    "reportsIn": "reports in",
+    "lastDays": "in the last 30 days",
+    "reports7d": "Reports (7d)",
+    "reports30d": "Reports (30d)",
+    "diseased30d": "Diseased (30d)",
+    "healthy30d": "Healthy (30d)",
+    "diseasesTitle": "Diseases reported (30 days)",
+    "noPredictions": "No predictions yet in your organization.",
+    "thisWeek": "this week",
+    "hotspots": "Disease hotspots (30 days)",
+    "noReports": "No disease reports yet.",
+    "weeklyTrend": "Weekly trend",
+    "noData": "No data yet.",
+    "reports": "reports",
+    "loadError": "Failed to load outbreak data"
   },
   "farmer": {
     "detectionTitle": "Crop Disease Detection",

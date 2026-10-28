@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   ClipboardList, UserCheck, MapPin, Compass, Users,
-  Plus, Search, Stethoscope,
+  Plus, Search, Stethoscope, Activity,
 } from 'lucide-react';
 import DashboardHeader from '@/components/layout/DashboardHeader';
 import { useTranslation } from '@/i18n/LocaleContext';
@@ -20,6 +20,7 @@ import RegionAssignmentsList from '@/components/cooperative/RegionAssignmentsLis
 import AssignAgronomistModal from '@/components/cooperative/AssignAgronomistModal';
 import MembersPanel from '@/components/admin/MembersPanel';
 import CredentialsModal from '@/components/shared/CredentialsModal';
+import DiseaseOutbreaksSection from '@/components/cooperative/DiseaseOutbreaksSection';
 
 /**
  * COOPERATIVE ADMIN DASHBOARD
@@ -31,7 +32,7 @@ import CredentialsModal from '@/components/shared/CredentialsModal';
  *  - Members → everyone in the org, with activate/deactivate + password reset
  */
 
-type TabType = 'codes' | 'agronomists' | 'assignments' | 'members';
+type TabType = 'codes' | 'agronomists' | 'assignments' | 'members' | 'outbreaks';
 
 const CooperativeAdminDashboard: React.FC = () => {
   const { t } = useTranslation();
@@ -199,6 +200,12 @@ const CooperativeAdminDashboard: React.FC = () => {
       label: 'All Members',
       icon: <Users className="h-4 w-4" />,
       activeClass: 'border-brand-500 text-brand-600 bg-brand-50',
+    },
+    {
+      key: 'outbreaks',
+      label: t('dashboard.tabs.outbreaks'),
+      icon: <Activity className="h-4 w-4" />,
+      activeClass: 'border-red-500 text-red-600 bg-red-50',
     },
   ];
 
@@ -417,6 +424,19 @@ const CooperativeAdminDashboard: React.FC = () => {
                   onToggleStatus={handleToggleMemberStatus}
                   onResetPassword={handleResetMemberPassword}
                 />
+              </div>
+            )}
+
+            {/* DISEASE OUTBREAKS TAB — surveillance across the org */}
+            {activeTab === 'outbreaks' && (
+              <div className="space-y-4">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">{t('outbreaks.title')}</h2>
+                  <p className="text-sm text-gray-500 mt-1">
+                    {t('outbreaks.subtitle')}
+                  </p>
+                </div>
+                <DiseaseOutbreaksSection />
               </div>
             )}
           </div>

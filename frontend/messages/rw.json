@@ -138,8 +138,29 @@
       "detection": "Kumenya Indwara",
       "scans": "Isuzuma Zanjye",
       "agronomist": "Agoronome Wanjye",
-      "messages": "Ubutumwa"
+      "messages": "Ubutumwa",
+      "outbreaks": "Indwara Zabonetse"
     }
+  },
+  "outbreaks": {
+    "title": "Indwara Zabonetse",
+    "subtitle": "Ibyegeranyo by'isuzuma ryose muri koperative yawe — indwara zabonetse n'aho ziri.",
+    "alerts": "Imenyeshwa yindwara zabonetse",
+    "reportsIn": "raporo muri",
+    "lastDays": "mu minsi 30 ishize",
+    "reports7d": "Raporo (iminsi 7)",
+    "reports30d": "Raporo (iminsi 30)",
+    "diseased30d": " indwara (iminsi 30)",
+    "healthy30d": "Ibihigwa bimeze neza (iminsi 30)",
+    "diseasesTitle": "Indwara zabitswe (iminsi 30)",
+    "noPredictions": "Nta suzuma rirakorwa muri koperative yawe.",
+    "thisWeek": "iki cyumweru",
+    "hotspots": "Ahibasiwe indwara (iminsi 30)",
+    "noReports": "Nta raporo y'indwara irabaho.",
+    "weeklyTrend": "Icyerekezo mu cyumweru",
+    "noData": "Nta makuru arahari.",
+    "reports": "raporo",
+    "loadError": "Ntibyashobotse gushaka amakuru y'indwara"
   },
   "farmer": {
     "detectionTitle": "Kumenya Indwara z'Ibihingwa",
@@ -149,31 +170,31 @@
     "tipsTitle": "Inama zo kubona ibisubizo byiza",
     "tips": {
       "clear": "Koresha amafoto asobanutse kandi afite umucyo uhagije",
-      "focus": "Fotanya ibice by'igihingwa bigize indwara",
+      "focus": "Fotora ibice by'igihingwa bigize indwara",
       "blurry": "Irinde amafoto adasobanutse",
       "formats": "Uburyo bwemerewe: JPG, PNG",
-      "saved": "Ibyavuzwe bibikwa ako kanya kugira ngo agworonome abisuzume"
+      "saved": "Ibyabonywe bibikwa ako kanya kugira ngo agworonome abisuzume"
     }
   },
   "predict": {
     "selectImage": "Kanda uhitemo ifoto",
     "processing": "Biri gukorwa…",
-    "dragDrop": "cyangwa shyirayo ifoto",
+    "dragDrop": "cyangwa shyiramwo ifoto",
     "formats": "JPG, PNG byemerewe",
     "imageOnly": "Hitamo ifoto gusa (JPG, PNG, n'ibindi)",
     "preview": "Igaragaza mbere",
     "clear": "Siba",
-    "fileName": "Izina ry'idosiye",
+    "fileName": "Izina rya dosiye",
     "fileSize": "Ingano",
     "fileType": "Ubwoko",
     "getPrediction": "Suzuma indwara",
     "analyzing": "Isuzuma ry'ifoto riri gukorwa…",
     "detected": "Indwara yabonetse",
     "confidence": "Icyizere",
-    "topPredictions": "Ibyo bishoboka cyane (5)",
+    "topPredictions": "Uburwayi bucyekwa cyane (5)",
     "saved": "Isuzuma ryabitswe neza!",
     "saving": "Isuzuma rirabikwa…",
-    "lowConfidenceTip": "Niba icyizere kiri hasi, gerageza gufata amafoto asobanutse y'aharemwe n'indwara."
+    "lowConfidenceTip": "Niba icyizere kiri hasi, gerageza gufata amafoto meza yahafashwe n'indwara."
   },
   "diseases": {
     "Maize_Cercospora_leaf_spot": "Indwara y'utubara tw'ikijuju ku mababi y'ibigori",

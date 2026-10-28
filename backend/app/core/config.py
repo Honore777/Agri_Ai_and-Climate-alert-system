@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-SECRET_KEY='super_secret_key'
+SECRET_KEY='imanairaturindaiminsiyosenomunziraucamoiraduhazaamahoroimanairaturinda'
 
 ALGORITHM='HS256'
 

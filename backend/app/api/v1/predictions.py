@@ -826,3 +826,92 @@ def get_message_detail(
         created_at=message.created_at,
         updated_at=message.updated_at,
     )
+
+# ============================================================================
+# ORGANIZATION DISEASE SUMMARY — cooperative admin outbreak dashboard
+# ============================================================================
+
+@router.get('/organization/summary')
+def organization_disease_summary(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Aggregated disease-surveillance stats for the cooperative's organization.
+    Answers: which diseases are spreading, where (sector/cell), and how fast.
+    """
+    if current_user.role != 'cooperative_admin':
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail='Only cooperative admins can view the disease summary')
+    if not current_user.organization_id:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail='No organization linked to this account')
+
+    from collections import Counter
+    from datetime import timedelta
+    from sqlalchemy.orm import joinedload
+
+    now = datetime.utcnow()
+    since_30d = now - timedelta(days=30)
+    since_7d = now - timedelta(days=7)
+
+    preds = (
+        db.query(Prediction)
+        .join(User, Prediction.farmer_id == User.id)
+        .options(joinedload(Prediction.farmer))
+        .filter(User.organization_id == current_user.organization_id)
+        .all()
+    )
+
+    disease_30d: Counter = Counter()
+    disease_7d: Counter = Counter()
+    hotspots: Counter = Counter()
+    loc_disease: Counter = Counter()
+    weekly: dict = {}
+    healthy_30d = 0
+
+    for p in preds:
+        d = p.predicted_disease
+        if p.created_at >= since_30d:
+            disease_30d[d] += 1
+            if 'healthy' in d.lower():
+                healthy_30d += 1
+            else:
+                u = p.farmer
+                loc = (
+                    (u.cell.name if u.cell else None)
+                    or (u.sector.name if u.sector else None)
+                    or (u.district.name if getattr(u, 'district', None) else None)
+                ) if u else None
+                if loc:
+                    hotspots[loc] += 1
+                    loc_disease[(loc, d)] += 1
+            week_start = (p.created_at - timedelta(days=p.created_at.weekday())).date()
+            weekly[week_start] = weekly.get(week_start, 0) + 1
+            if p.created_at >= since_7d:
+                disease_7d[d] += 1
+
+    alerts = [
+        {'location': loc, 'disease': d, 'count': c}
+        for (loc, d), c in sorted(loc_disease.items(), key=lambda kv: -kv[1])
+        if c >= 3
+    ]
+
+    return {
+        'totals': {
+            'all_time': len(preds),
+            'last_30d': sum(disease_30d.values()),
+            'last_7d': sum(disease_7d.values()),
+            'diseased_30d': sum(disease_30d.values()) - healthy_30d,
+            'healthy_30d': healthy_30d,
+        },
+        'diseases': sorted(
+            [{'disease': d, 'count_30d': disease_30d[d], 'count_7d': disease_7d[d]}
+             for d in disease_30d],
+            key=lambda x: -x['count_30d'],
+        ),
+        'hotspots': [{'location': loc, 'reports': c}
+                     for loc, c in hotspots.most_common(5)],
+        'outbreak_alerts': alerts[:5],
+        'weekly': [{'week': d.strftime('%b %d'), 'count': weekly[d]}
+                   for d in sorted(weekly)],
+    }

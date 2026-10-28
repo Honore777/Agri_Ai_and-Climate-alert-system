@@ -60,6 +60,20 @@ export interface SavedPrediction {
   farmer_location_source?: string | null;
 }
 
+export interface OrgDiseaseSummary {
+  totals: {
+    all_time: number;
+    last_30d: number;
+    last_7d: number;
+    diseased_30d: number;
+    healthy_30d: number;
+  };
+  diseases: { disease: string; count_30d: number; count_7d: number }[];
+  hotspots: { location: string; reports: number }[];
+  outbreak_alerts: { location: string; disease: string; count: number }[];
+  weekly: { week: string; count: number }[];
+}
+
 const INFERENCE_API = '/inference/predict';
 const PREDICTIONS_SAVE_API = '/predictions/save';
 
@@ -137,6 +151,12 @@ const predictionsService = {
   /** Farmer's own prediction history (newest first). */
   async getMyPredictions(): Promise<SavedPrediction[]> {
     const res = await apiClient.get<SavedPrediction[]>('/predictions/user/me');
+    return res.data;
+  },
+
+  /** Cooperative-scoped disease surveillance summary (coop admin only). */
+  async getOrgSummary(): Promise<OrgDiseaseSummary> {
+    const res = await apiClient.get<OrgDiseaseSummary>('/predictions/organization/summary');
     return res.data;
   },
 
