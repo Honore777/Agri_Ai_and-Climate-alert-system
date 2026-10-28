@@ -16,10 +16,11 @@ coming weather next to the AI result.
 """
 
 import json
+import os
 import requests
 import time
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional, Tuple
 
 from sqlalchemy.orm import Session
@@ -70,7 +71,13 @@ def resolve_coordinates(user: User, db: Session) -> Tuple[Optional[float], Optio
     return None, None, None
 
 
-def fetch_weather(latitude: float, longitude: float) -> dict:
+VC_TIMELINE_URL = (
+    "https://weather.visualcrossing.com/VisualCrossingWebServices/"
+    "rest/services/timeline"
+)
+
+
+def _fetch_open_meteo(latitude: float, longitude: float) -> dict:
     """Call Open-Meteo: past 30 days + next 7 days in one request."""
     response = requests.get(
         OPEN_METEO_URL,
@@ -86,6 +93,47 @@ def fetch_weather(latitude: float, longitude: float) -> dict:
     )
     response.raise_for_status()
     return response.json()
+
+
+def _fetch_visual_crossing(latitude: float, longitude: float, key: str) -> dict:
+    """Visual Crossing timeline API — history + forecast in one call,
+    quota tied to OUR API key (not a shared egress IP).
+    Normalizes the response into the Open-Meteo 'daily' shape so
+    build_summary/_daily_series work unchanged.
+    """
+    today = datetime.utcnow().date()
+    start = today - timedelta(days=HISTORY_DAYS - 1)
+    end = today + timedelta(days=FORECAST_DAYS)
+    response = requests.get(
+        f"{VC_TIMELINE_URL}/{latitude},{longitude}/{start}/{end}",
+        params={
+            "key": key,
+            "unitGroup": "metric",
+            "include": "days",
+            "elements": "datetime,tempmax,tempmin,precip,humidity",
+        },
+        timeout=TIMEOUT_SECONDS,
+    )
+    response.raise_for_status()
+    days = response.json().get("days", [])
+    return {
+        "daily": {
+            "time": [d["datetime"] for d in days],
+            "temperature_2m_max": [d.get("tempmax") for d in days],
+            "temperature_2m_min": [d.get("tempmin") for d in days],
+            "precipitation_sum": [d.get("precip") for d in days],
+            "relative_humidity_2m_mean": [d.get("humidity") for d in days],
+        }
+    }
+
+
+def fetch_weather(latitude: float, longitude: float) -> dict:
+    """Weather provider: Visual Crossing when a key is configured,
+    otherwise Open-Meteo (free, no key — but IP-rate-limited)."""
+    key = os.getenv("VISUAL_CROSSING_API_KEY")
+    if key:
+        return _fetch_visual_crossing(latitude, longitude, key)
+    return _fetch_open_meteo(latitude, longitude)
 
 
 def build_summary(payload: dict) -> dict:
