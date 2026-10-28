@@ -40,6 +40,17 @@ app.add_middleware(
 
 app.include_router(api_router, prefix="/api/v1")
 
+@app.on_event("startup")
+def warm_model():
+    """Preload the disease model so the first /predict request is fast."""
+    try:
+        from app.ml.model_loader import load_model
+        load_model()
+        print("ML model preloaded at startup")
+    except Exception as e:
+        # Never block startup on model issues — predict() will retry lazily
+        print(f"Model preload skipped: {e}")
+
 @app.get("/health")
 def health_check():
     """Health check endpoint"""
