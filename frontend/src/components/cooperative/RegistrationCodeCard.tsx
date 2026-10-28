@@ -60,8 +60,11 @@ const RegistrationCodeCard: React.FC<RegistrationCodeCardProps> = ({ code, onDel
       {/* Details */}
       <div className="text-sm text-gray-600 space-y-1 mb-4">
         <p>Created: {new Date(code.created_at).toLocaleDateString()}</p>
-        {code.is_used && code.used_by_user_id && (
-          <p>Used by user ID: {code.used_by_user_id}</p>
+        {code.is_used && (code.used_by_name || code.used_by_email) && (
+          <p>
+            Used by: <span className="font-medium text-gray-800">{code.used_by_name ?? 'Farmer'}</span>
+            {code.used_by_email && <span className="text-gray-500"> ({code.used_by_email})</span>}
+          </p>
         )}
       </div>
 

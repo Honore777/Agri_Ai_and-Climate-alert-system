@@ -62,8 +62,10 @@ class CodeResponse(BaseModel):
     is_active: bool
     is_used: bool                      # ✅ NEW: Whether code has been used
     used_by_user_id: Optional[int] = None  # ✅ NEW: Which user used it (if any)
+    used_by_email: Optional[str] = None     # Email of the farmer who redeemed it
+    used_by_name: Optional[str] = None      # Full name of that farmer
     created_at: datetime
-    
+
     class Config:
         from_attributes = True
 
@@ -209,23 +211,39 @@ def list_registration_codes(
     System admins can list any org's codes.
     """
     
-    if current_user.role == "system_admin":
-        # System admin sees all codes (both used and unused)
-        codes = db.query(RegistrationCode).all()
-    elif current_user.role == "cooperative_admin":
-        # Coop admin sees only their org's codes
-        # ✅ FIXED: Only show UNUSED codes (is_used=False)
-        codes = db.query(RegistrationCode).filter(
-            RegistrationCode.organization_id == current_user.organization_id,
-            RegistrationCode.is_used == False  # Only available codes
-        ).all()
-    else:
+    from sqlalchemy.orm import joinedload
+
+    query = db.query(RegistrationCode).options(
+        joinedload(RegistrationCode.user_who_used_it)
+    )
+    if current_user.role == "cooperative_admin":
+        # Coop admin sees only their org's codes — used AND unused,
+        # so the admin has the full audit trail of who registered when.
+        query = query.filter(
+            RegistrationCode.organization_id == current_user.organization_id
+        )
+    elif current_user.role != "system_admin":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Only admins can view registration codes"
         )
-    
-    return codes
+
+    codes = query.order_by(RegistrationCode.created_at.desc()).all()
+    return [
+        CodeResponse(
+            id=c.id,
+            code=c.code,
+            role=c.role,
+            organization_id=c.organization_id,
+            is_active=c.is_active,
+            is_used=c.is_used,
+            used_by_user_id=c.used_by_user_id,
+            used_by_email=c.user_who_used_it.email if c.user_who_used_it else None,
+            used_by_name=c.user_who_used_it.full_name if c.user_who_used_it else None,
+            created_at=c.created_at,
+        )
+        for c in codes
+    ]
 
 
 # ========================================

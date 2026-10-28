@@ -11,6 +11,8 @@ export interface RegistrationCode {
   code: string;                    // Example: "COOP-001-2026-A1B2C3D4"
   is_used: boolean;                // ✅ Has a farmer used this yet?
   used_by_user_id: number | null;  // ✅ Which farmer used it? (null if not used)
+  used_by_email: string | null;    // ✅ Email of the farmer who redeemed it
+  used_by_name: string | null;     // ✅ Full name of that farmer
   created_at: string;              // "2026-02-15T..."
   role: string;                    // "farmer" or other role
   is_active: boolean;              // Is this code still valid?

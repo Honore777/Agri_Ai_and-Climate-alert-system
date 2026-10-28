@@ -17,6 +17,7 @@ coming weather next to the AI result.
 
 import json
 import requests
+import time
 from pathlib import Path
 from datetime import datetime
 from typing import Optional, Tuple
@@ -155,13 +156,19 @@ def create_snapshot_for_prediction(
         print(f"[WEATHER] No coordinates resolved for user {user.id}")
         return None
 
-    try:
-        payload = fetch_weather(latitude, longitude)
-    except requests.RequestException as e:
-        print(f"[WEATHER] Open-Meteo call failed ({latitude},{longitude}): {e}")
-        return None
-    except Exception as e:
-        print(f"[WEATHER] Snapshot failed ({latitude},{longitude}): {e}")
+    # Open-Meteo free tier rate-limits by IP — shared hosting egress gets
+    # transient 429s, so retry a few times before giving up.
+    payload = None
+    for attempt in range(3):
+        try:
+            payload = fetch_weather(latitude, longitude)
+            break
+        except requests.RequestException as e:
+            print(f"[WEATHER] Open-Meteo attempt {attempt + 1}/3 failed "
+                  f"({latitude},{longitude}): {e}")
+            if attempt < 2:
+                time.sleep(1.5 * (attempt + 1))
+    if payload is None:
         return None
 
     data = {
