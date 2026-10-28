@@ -8,8 +8,9 @@ python-jose==3.3.0
 passlib==1.7.4
 bcrypt==4.1.1
 python-multipart==0.0.6
-torch
-torchvision
+-f https://download.pytorch.org/whl/cpu
+torch==2.10.0+cpu
+torchvision==0.25.0+cpu
 Pillow
 requests
 email-validator==2.2.0

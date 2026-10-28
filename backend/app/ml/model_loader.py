@@ -39,7 +39,7 @@ def load_model(model_path: str=None,device:str='cpu'):
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Model not found:{model_path}")
         
-        model = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
+        model = models.resnet18(weights=None)
 
         num_features = model.fc.in_features
 
