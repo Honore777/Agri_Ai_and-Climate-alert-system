@@ -22,7 +22,7 @@ Every role in the workflow can be exercised end-to-end:
 | Role | Email | Password | Try this |
 |---|---|---|---|
 | **Platform admin** | harerimana456@gmail.com | aRSENEANTONIO@1 | Create organizations & cooperative admins; manage all users |
-| **Cooperative admin** | honorine456@gmail.com | Honorine456 | Create agronomists, assign regions, generate farmer codes, watch the **Outbreaks** surveillance tab |
+| **Cooperative admin** | honorine456@gmail.com | Honorine@456 | Create agronomists, assign regions, generate farmer codes, watch the **Outbreaks** surveillance tab |
 | **Agronomist** | jolie456@gmail.com | Jolie@456 | Review pending predictions, see farmer GPS + climate, send advice, request extra photos |
 | **Farmer** | didace456@gmail.com | Didace@456 | Share GPS, photograph a crop, receive AI diagnosis + climate panel, read agronomist advice |
 
@@ -44,6 +44,8 @@ Agri AI closes that gap: a photo taken in the field becomes a diagnosis in secon
 | **Visual Crossing Timeline API** (free tier, API key) | Every prediction attaches 30 days of rainfall/temperature/humidity history + a 7-day forecast for the farmer's exact GPS or district — powering automatic climate alerts (e.g., "heavy rain + humidity → fungal blight risk"). Open-Meteo remains as an automatic fallback. |
 | **NISR-aligned administrative geography** | Full Rwanda hierarchy — province → district → sector → cell → village — drives agronomist assignment, cooperative scoping, and outbreak hotspots |
 | **NISR agricultural priorities** | Crop focus mirrors national staple-crop priorities: maize, Irish potato, and tomato |
+
+> **Dataset note:** the image dataset is ≈2.7 GB — too large to include in this repository, so only the Kaggle link is provided (as per submission guidelines). The trained model weights resulting from that data are included in `models/`, and the full training pipeline is reproducible in `notebooks/`.
 
 ## 🧭 How the workflow runs end-to-end
 
@@ -90,6 +92,7 @@ npm run dev                                   # http://localhost:3000
 - `notebooks/Training_on_three_crop_diseases_versions.ipynb` — the full training pipeline: Rwanda-relevant class selection, two-stage transfer learning, and validation metrics (99.4% accuracy on the 11-class stage-2 model)
 - `notebooks/Copy_of_Plant_disease_training_version_one.ipynb` — initial experiment: baseline training + fine-tuning on the full 38-class dataset, with loss/accuracy curves
 - `demo/demo-video.mp4` — screen recording of the full user journey (≤3 min), also on YouTube
+- `student_cards/` — student cards of both team members (eligibility verification)
 - `docs/` — supporting documentation
 
 ## ⚠️ Limitations
