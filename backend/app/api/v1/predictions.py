@@ -23,6 +23,7 @@ from app.schemas.predictionresponse import PredictionResponse, PredictionCreate,
 from app.schemas.prediction_review import  PredictionReviewCreate,PredictionReviewResponse
 from app.schemas.message import MessageResponse, MessageListResponse, MessageCreate
 from app.api.v1.users import _build_location_path
+from app.services.storage_service import upload_bytes
 
 router = APIRouter(prefix="/predictions", tags=["predictions"])
 
@@ -384,11 +385,13 @@ async def save_prediction(
         # Save image to disk
         with open(file_path, 'wb') as f:
             f.write(image_data)
+        upload_bytes(image_data, f"predictions/{filename}")
         
         # Create Image record
         image = Image(
             farmer_id=current_user.id,
             file_path=file_path,
+            file_data=image_data,
             image_metadata='AI prediction upload'
         )
         db.add(image)
@@ -477,11 +480,13 @@ def add_prediction_attachments(
             file_path = os.path.join(image_dir, filename)
             with open(file_path, 'wb') as f:
                 f.write(raw)
+            upload_bytes(raw, f"predictions/{filename}")
 
             img = Image(
                 farmer_id=current_user.id,
                 prediction_id=prediction_id,
                 file_path=file_path,
+                file_data=raw,
                 image_metadata='Additional photo for agronomist review',
             )
             db.add(img)

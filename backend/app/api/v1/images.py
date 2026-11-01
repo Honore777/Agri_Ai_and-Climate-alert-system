@@ -6,7 +6,7 @@ Endpoints for retrieving uploaded images.
 """
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from sqlalchemy.orm import Session
 from pathlib import Path
 import os
@@ -69,9 +69,22 @@ def get_image(
             detail="Not authorized to view this image"
         )
 
-    # Check if file exists
+    # Serve from disk when the file still exists (Render's disk is
+    # ephemeral, so older files disappear after restarts/redeploys).
     file_path = Path(image.file_path)
     if not file_path.exists():
+        suffix = Path(image.file_path).suffix.lower()
+        mt = {
+            '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
+            '.gif': 'image/gif', '.webp': 'image/webp',
+        }.get(suffix, 'application/octet-stream')
+        if image.file_data:
+            return Response(content=bytes(image.file_data), media_type=mt)
+        # Last resort: pull the object from the Supabase bucket
+        from app.services.storage_service import download_bytes
+        blob = download_bytes(f"predictions/{file_path.name}")
+        if blob:
+            return Response(content=blob, media_type=mt)
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Image file not found on server"

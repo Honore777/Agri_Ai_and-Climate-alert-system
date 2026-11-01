@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey , DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey , DateTime, LargeBinary
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
@@ -13,6 +13,8 @@ class Image(Base):
     # (agronomist may ask for more angles to confirm a diagnosis).
     prediction_id= Column(Integer,ForeignKey('predictions.id'), nullable=True)
     file_path=Column(String,nullable=False)
+    # Binary copy of the image so it survives Render's ephemeral disk
+    file_data=Column(LargeBinary, nullable=True)
     image_metadata=Column(String, nullable=True)
     uploaded_at= Column(DateTime,default=datetime.utcnow)
 

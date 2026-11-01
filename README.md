@@ -92,13 +92,13 @@ npm run dev                                   # http://localhost:3000
 - `notebooks/Training_on_three_crop_diseases_versions.ipynb` — the full training pipeline: Rwanda-relevant class selection, two-stage transfer learning, and validation metrics (99.4% accuracy on the 11-class stage-2 model)
 - `notebooks/Copy_of_Plant_disease_training_version_one.ipynb` — initial experiment: baseline training + fine-tuning on the full 38-class dataset, with loss/accuracy curves
 - `demo/demo-video.mp4` — screen recording of the full user journey (≤3 min), also on YouTube
-- `student_cards/` — student cards of both team members (eligibility verification)
+- `student_cards/` — student cards of both team members 
 - `docs/` — supporting documentation
 
 ## ⚠️ Limitations
 
 - No complete public dataset of diseases photographed on Rwandan fields exists — we trained on the closest public dataset filtered to Rwanda's priority crops; field-collected imagery would further improve accuracy.
-- Free-tier hosting means cold-start latency after idle periods and shared-IP rate limits on free APIs (mitigated with a dedicated weather API key and retry logic).
+
 
 ## 🙏 Acknowledgements & sources
 
