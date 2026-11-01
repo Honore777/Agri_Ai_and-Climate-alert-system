@@ -23,7 +23,12 @@ def _headers(content_type: str = "application/octet-stream"):
 
 
 def storage_enabled() -> bool:
-    return bool(SUPABASE_URL and SUPABASE_KEY)
+    # Opt-in: only enable bucket I/O when explicitly requested
+    # (Render sets SUPABASE_STORAGE_ENABLED=1; local dev stays on disk).
+    return bool(
+        SUPABASE_URL and SUPABASE_KEY
+        and os.getenv("SUPABASE_STORAGE_ENABLED", "").lower() in ("1", "true", "yes")
+    )
 
 
 def upload_bytes(data: bytes, object_path: str, content_type: str = "image/jpeg") -> bool:
